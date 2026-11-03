@@ -1,5 +1,5 @@
 // Hand-written diagram example: Proxmox storage and backup flow.
-// `make diagrams` renders every *.dot in this folder to SVG + PNG.
+// `make generate` renders every *.dot in this folder to SVG + PNG.
 digraph proxmox_storage {
   graph [rankdir=LR, fontname="Helvetica", bgcolor="transparent"];
   node  [shape=box, style="rounded,filled", fontname="Helvetica", fillcolor="#E9DDF5"];

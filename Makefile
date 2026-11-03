@@ -1,4 +1,4 @@
-# homelab - diagrams, docs and helpers. Run `make` for the list of targets.
+# homelab - generated docs, diagrams and helpers. Run `make` for the list of targets.
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
@@ -9,11 +9,13 @@ STAMP := $(VENV)/.installed
 
 # ---- Diagram sources --------------------------------------------------------
 INVENTORY   := inventory.yaml
+INVENTORY_MD := network/inventory.md
 NET_DIAGRAM := network/diagrams/network
 DOT_SRC     := $(wildcard network/diagrams/*.dot)
 WIRING_SRC  := $(wildcard esphome/devices/*/wiring.yaml)
 
-DIAGRAMS := $(NET_DIAGRAM).svg $(NET_DIAGRAM).png \
+GENERATED := $(INVENTORY_MD) \
+            $(NET_DIAGRAM).svg $(NET_DIAGRAM).png \
             $(DOT_SRC:.dot=.svg) $(DOT_SRC:.dot=.png) \
             $(WIRING_SRC:.yaml=.svg) $(WIRING_SRC:.yaml=.png)
 
@@ -23,8 +25,12 @@ ESPHOME       := docker run --rm -it --network host -v "$(CURDIR)/esphome":/conf
 DEVICE        ?=
 ESPHOME_DEVICES := $(sort $(notdir $(wildcard esphome/devices/*)))
 
-# ---- MikroTik ----------------------------------------------------------------
-ROUTER ?= admin@192.168.1.1
+# ---- Read-only access to MikroTik / UniFi / Proxmox ---------------------------
+# Credentials live outside the repo. Template: credentials.env.example, setup: ACCESS.md
+CREDENTIALS ?= $(HOME)/.config/homelab/credentials.env
+LOAD_CREDENTIALS = test -r "$(CREDENTIALS)" || { echo "Missing $(CREDENTIALS) - copy credentials.env.example, see ACCESS.md"; exit 1; }; \
+	set -a; . "$(CREDENTIALS)"; set +a;
+STATUS = $(LOAD_CREDENTIALS) python3 scripts/homelab_status.py
 
 .PHONY: help
 help: ## Show this help
@@ -38,7 +44,7 @@ $(STAMP): requirements.txt
 	@touch $@
 
 .PHONY: setup hooks check-graphviz
-setup: $(STAMP) check-graphviz ## Create Python venv with mkdocs, wireviz, pre-commit
+setup: $(STAMP) check-graphviz ## Create Python venv with wireviz, pre-commit
 
 hooks: $(STAMP) ## Install git pre-commit hooks (gitleaks etc.)
 	$(BIN)/pre-commit install
@@ -46,9 +52,12 @@ hooks: $(STAMP) ## Install git pre-commit hooks (gitleaks etc.)
 check-graphviz:
 	@command -v dot >/dev/null || { echo "Graphviz 'dot' not found - install it (e.g. sudo apt install graphviz)"; exit 1; }
 
-# ---- Diagrams ---------------------------------------------------------------
-.PHONY: diagrams
-diagrams: check-graphviz $(DIAGRAMS) ## Render all diagrams (network, *.dot, ESPHome wiring) to SVG + PNG
+# ---- Generated files (committed) ---------------------------------------------
+.PHONY: generate
+generate: check-graphviz $(GENERATED) ## Regenerate network/inventory.md and all diagrams (network, *.dot, ESPHome wiring)
+
+$(INVENTORY_MD): $(INVENTORY) scripts/inventory.py | $(STAMP)
+	$(PY) scripts/inventory.py markdown $< -o $@
 
 build/network.dot: $(INVENTORY) scripts/inventory.py | $(STAMP)
 	$(PY) scripts/inventory.py dot $< -o $@
@@ -65,30 +74,37 @@ network/diagrams/%.png: network/diagrams/%.dot
 esphome/devices/%/wiring.svg esphome/devices/%/wiring.png: esphome/devices/%/wiring.yaml | $(STAMP)
 	$(BIN)/wireviz -f sp -o $(@D) -O wiring $<
 
-# ---- Docs (GitHub Pages) -----------------------------------------------------
-.PHONY: docs-gen docs serve
-docs-gen: diagrams | $(STAMP)
-	$(PY) scripts/inventory.py markdown $(INVENTORY) -o docs/generated/inventory.md
-	$(PY) scripts/build_docs.py
-
-docs: docs-gen ## Build the static site into site/
-	$(BIN)/mkdocs build --strict
-
-serve: docs-gen ## Live-preview the docs site on http://127.0.0.1:8000
-	$(BIN)/mkdocs serve
-
 # ---- Lint ---------------------------------------------------------------------
 .PHONY: lint
 lint: $(STAMP) ## Run all pre-commit checks (incl. secret scan) on the whole repo
 	$(BIN)/pre-commit run --all-files
 
-# ---- MikroTik ----------------------------------------------------------------
+# ---- Live status (read-only, prints to terminal, nothing written to the repo) --
+.PHONY: check-access mikrotik-status unifi-status pve-status status
+check-access: ## Test read-only access to MikroTik, UniFi and Proxmox
+	@$(STATUS) check
+
+mikrotik-status: ## Router version + DHCP leases (dynamic vs static)
+	@$(STATUS) mikrotik
+
+unifi-status: ## UniFi devices (model, firmware, IP, uplink) + switch ports
+	@$(STATUS) unifi
+
+pve-status: ## Proxmox guests, storage, disks, backup jobs
+	@$(STATUS) pve
+
+status: mikrotik-status unifi-status pve-status ## All of the above - compare with inventory.yaml
+
+# ---- MikroTik config export (committed) ------------------------------------------
 .PHONY: mikrotik-export
-mikrotik-export: ## Pull text config from router (ROUTER=user@host), secrets hidden
-	ssh $(ROUTER) '/export terse' \
+mikrotik-export: ## Pull text config from router (secrets hidden, MACs + SSIDs masked)
+	@$(LOAD_CREDENTIALS) \
+	ssh -i "$${MIKROTIK_KEY/#\~/$$HOME}" -o BatchMode=yes "$$MIKROTIK_USER@$$MIKROTIK_HOST" '/export terse' \
 	  | tr -d '\r' \
 	  | grep -vE '^# (serial number|software id) =' \
 	  | sed -E '1s/^# .* (by RouterOS .*)$$/# \1/' \
+	  | sed -E 's/([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}/XX:XX:XX:XX:XX:XX/g' \
+	  | sed -E 's/ssid=("[^"]*"|[^ ]+)/ssid="<redacted>"/g' \
 	  > network/mikrotik/export.rsc
 	@echo "Review before committing:  git diff network/mikrotik/export.rsc"
 
@@ -114,5 +130,5 @@ esphome-logs: esphome-check-device ## Stream device logs (DEVICE=name)
 
 # ---- Housekeeping ------------------------------------------------------------
 .PHONY: clean
-clean: ## Remove build output (keeps committed diagrams)
-	rm -rf build site docs/generated
+clean: ## Remove build output (keeps committed generated files)
+	rm -rf build

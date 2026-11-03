@@ -38,8 +38,6 @@ home-assistant/config/known_devices.yaml
 # ---- Tooling / build output -------------------------------------------------
 .venv/
 build/
-site/
-docs/generated/
 __pycache__/
 .DS_Store
 

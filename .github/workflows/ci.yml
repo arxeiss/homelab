@@ -16,6 +16,12 @@ jobs:
         with:
           python-version: "3.12"
       - uses: pre-commit/action@v3.0.1
+      - name: network/inventory.md is up to date
+        run: |
+          pip install -q pyyaml
+          python scripts/inventory.py markdown inventory.yaml -o network/inventory.md
+          git diff --exit-code network/inventory.md || {
+            echo "::error::network/inventory.md is stale - run 'make generate' and commit"; exit 1; }
 
   esphome:
     name: Validate ESPHome configs

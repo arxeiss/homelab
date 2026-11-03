@@ -1,118 +1,162 @@
 # Single source of truth for the homelab.
-# `make diagrams` turns this into the network diagram, `make docs` into tables.
+# `make generate` turns this into network/diagrams/network.svg and network/inventory.md.
 #
 # Public repo! Do NOT put here: passwords, public IP / DDNS name, MAC addresses,
-# serial numbers. Internal RFC1918 addresses are fine.
+# serial numbers, real SSIDs, Proxmox node name. Internal RFC1918 addresses are fine.
+# Real SSIDs and node name: password manager.
 #
-# Everything marked TODO is a placeholder - replace with real values.
+# Collected from the live systems on 2026-11-04. TODO marks what is still unknown.
 
 site:
   name: homelab
-  domain: home.arpa          # RFC 8375 domain for home networks
+  domain: lan
 
 vlans:
   - id: 1
     name: default
-    subnet: 192.168.1.0/24   # TODO
-    gateway: 192.168.1.1
-    dhcp: 192.168.1.100-192.168.1.199
+    subnet: 192.168.88.0/24
+    gateway: 192.168.88.1
+    dhcp: 192.168.88.100-192.168.88.254
     color: "#4C78A8"
     purpose: Trusted clients, infrastructure management
-  - id: 20                   # TODO: real VLAN ID
+  - id: 20
     name: iot
-    subnet: 192.168.20.0/24  # TODO
+    subnet: 192.168.20.0/24
     gateway: 192.168.20.1
-    dhcp: 192.168.20.100-192.168.20.199
+    dhcp: 192.168.20.100-192.168.20.254
     color: "#F58518"
-    purpose: IoT / ESPHome devices, no access to default VLAN
+    purpose: IoT devices; internet only, no access to default VLAN
 
-# type: internet | router | switch | ap | server | guest
-# docs: page in docs/ (used for clickable diagram nodes)
+# type: internet | router | switch | ap | server | guest | client
+# ip_mode: static (configured on the device) | dhcp (dynamic lease, may change!)
+# docs: page describing the device (path from repo root, linked from network/inventory.md)
 devices:
   - name: internet
     type: internet
-    label: ISP
+    label: ISP (DHCP on WAN)
 
   - name: router
     type: router
     vendor: MikroTik
-    model: TODO
-    ip: 192.168.1.1
-    docs: network/mikrotik.md
+    model: hAP ac (RB962UiGS-5HacT2HnT)
+    os: RouterOS 7.21.4 (long-term)
+    ip: 192.168.88.1
+    ip_mode: static
+    docs: network/mikrotik/README.md
 
   - name: switch
     type: switch
     vendor: Ubiquiti UniFi
-    model: TODO
-    ip: 192.168.1.2
-    docs: network/unifi.md
+    model: USW-24-PoE
+    os: 7.5.15
+    ip: 192.168.88.248
+    ip_mode: dhcp
+    location: basement ("Sklep switch")
+    docs: network/unifi/README.md
 
   - name: ap-1
     type: ap
     vendor: Ubiquiti UniFi
-    model: TODO
-    ip: 192.168.1.3
-    location: TODO
-    docs: network/unifi.md
+    model: U6 Pro
+    os: 6.8.2
+    ip: 192.168.88.243
+    ip_mode: dhcp
+    location: 1st floor ("1 NP")
+    docs: network/unifi/README.md
 
   - name: ap-2
     type: ap
     vendor: Ubiquiti UniFi
-    model: TODO
-    ip: 192.168.1.4
-    location: TODO
-    docs: network/unifi.md
+    model: U6 Pro
+    os: 6.8.2
+    ip: 192.168.88.244
+    ip_mode: dhcp
+    location: 2nd floor ("2 NP")
+    docs: network/unifi/README.md
 
   - name: pve
     type: server
-    vendor: Proxmox VE
-    model: TODO (CPU / RAM)
-    ip: 192.168.1.10
-    docs: servers/proxmox.md
+    vendor: Proxmox VE 9.2.6
+    model: i5-4210U, 12 GB RAM, 2x 128 GB SSD
+    ip: 192.168.88.10
+    ip_mode: static
+    docs: servers/proxmox/README.md
 
   # Proxmox guests (host: links them to the hypervisor)
-  - name: haos
-    type: guest
-    host: pve
-    kind: VM
-    vmid: 100
-    vendor: Home Assistant OS
-    ip: 192.168.1.20
-    vlans: [1, 20]
-    docs: home-assistant/index.md
-
-  - name: unifi-controller
+  - name: unifi-os-server
     type: guest
     host: pve
     kind: LXC
-    vmid: 101
-    vendor: UniFi Network Application
-    ip: 192.168.1.21
+    vmid: 100
+    vendor: UniFi OS Server (Network 10.6.109)
+    ip: 192.168.88.11
+    ip_mode: static
     vlans: [1]
-    docs: network/unifi.md
+    docs: network/unifi/README.md
 
   - name: gitlab-runner
     type: guest
     host: pve
     kind: LXC
-    vmid: 102
-    vendor: GitLab Runner
-    ip: 192.168.1.22
+    vmid: 101
+    vendor: GitLab Runner (Docker)
+    ip: 192.168.88.103
+    ip_mode: dhcp
     vlans: [1]
-    docs: servers/proxmox.md
+    docs: servers/proxmox/README.md
+
+  - name: homeassistant
+    type: guest
+    host: pve
+    kind: VM
+    vmid: 102
+    vendor: Home Assistant OS
+    ip: TODO (not deployed yet)
+    vlans: [1]
+    docs: home-assistant/README.md
+
+  # Wired clients
+  - name: nvr
+    type: client
+    label: Hikvision NVR
+    ip: 192.168.88.4
+    ip_mode: static
+  - name: cameras
+    type: client
+    label: 4x IP camera (PoE)
+    ip: 192.168.88.5-8
+    ip_mode: static
+  - name: alarm
+    type: client
+    label: Jablotron alarm
+    ip: 192.168.88.239
+    ip_mode: dhcp
 
 # Physical links. vlans: list of carried VLANs (more than one = trunk).
 links:
-  - { a: internet, a_port: "",     b: router, b_port: ether1, vlans: [] }
-  - { a: router,   a_port: ether2, b: switch, b_port: "1",    vlans: [1, 20] }
-  - { a: switch,   a_port: "2",    b: ap-1,   b_port: "",     vlans: [1, 20] }
-  - { a: switch,   a_port: "3",    b: ap-2,   b_port: "",     vlans: [1, 20] }
-  - { a: switch,   a_port: "4",    b: pve,    b_port: nic0,   vlans: [1, 20] }
+  - { a: internet, a_port: "",     b: router,        b_port: ether1, vlans: [] }
+  - { a: router,   a_port: ether2, b: switch,        b_port: "24",   vlans: [1, 20] }
+  - { a: switch,   a_port: "5",    b: ap-1,          b_port: "",     vlans: [1, 20] }
+  - { a: switch,   a_port: "9",    b: ap-2,          b_port: "",     vlans: [1, 20] }
+  - { a: switch,   a_port: "21",   b: pve,           b_port: nic0,   vlans: [1] }
+  - { a: switch,   a_port: "1-4",  b: cameras,       b_port: "",     vlans: [1] }
+  - { a: switch,   a_port: "22",   b: nvr,           b_port: "",     vlans: [1] }
+  - { a: switch,   a_port: "23",   b: alarm,         b_port: "",     vlans: [1] }
 
+# Real SSID names are kept out of the repo (password manager).
 wifi:
-  - ssid: TODO-home
+  - ssid: "<main>"
     vlan: 1
     bands: [2.4GHz, 5GHz]
-  - ssid: TODO-iot
+    security: WPA2-PSK
+    served_by: [ap-1, ap-2]
+  - ssid: "<iot>"
     vlan: 20
     bands: [2.4GHz]
+    security: WPA2-PSK
+    served_by: [ap-1, ap-2, router]
+  - ssid: "<main 5G> (disabled)"
+    vlan: 1
+    bands: [5GHz]
+    security: WPA2-PSK
+    served_by: [router (wlan2, disabled)]
