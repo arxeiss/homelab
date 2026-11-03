@@ -1,0 +1,27 @@
+# Install once: make hooks   (run `pre-commit autoupdate` to bump versions)
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+        args: [--unsafe]   # allow HA/ESPHome tags like !secret, !include
+      - id: check-added-large-files
+        args: [--maxkb=2048]
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+
+  - repo: local
+    hooks:
+      - id: forbid-secrets-files
+        name: forbid secrets / binary backup files
+        entry: "Refusing to commit secrets or binary backups"
+        language: fail
+        files: '(^|/)secrets\.yaml$|\.(backup|unf|vma|tar)$|(^|/)config\.toml$'
+        exclude: '^esphome/common/secrets\.yaml$'  # symlink to ../secrets.yaml, not the file itself

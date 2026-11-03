@@ -1,0 +1,28 @@
+# Template device: ESP32 + BME280 (temperature / humidity / pressure) over I2C.
+# Wiring: see wiring.yaml / wiring.svg
+substitutions:
+  name: template-device
+  friendly_name: Template device
+
+packages:
+  base: !include ../../common/base.yaml
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+
+sensor:
+  - platform: bme280_i2c
+    address: 0x76
+    update_interval: 60s
+    temperature:
+      name: Temperature
+    humidity:
+      name: Humidity
+    pressure:
+      name: Pressure

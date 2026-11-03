@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint + secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # gitleaks scans history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pre-commit/action@v3.0.1
+
+  esphome:
+    name: Validate ESPHome configs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use dummy secrets
+        run: cp esphome/secrets.example.yaml esphome/secrets.yaml
+      - name: esphome config
+        run: |
+          for dir in esphome/devices/*/; do
+            dev=$(basename "$dir")
+            echo "::group::$dev"
+            docker run --rm -v "$PWD/esphome":/config ghcr.io/esphome/esphome:stable \
+              config "devices/$dev/$dev.yaml" > /dev/null
+            echo "::endgroup::"
+          done

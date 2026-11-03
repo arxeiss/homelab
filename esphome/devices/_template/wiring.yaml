@@ -1,0 +1,25 @@
+# WireViz wiring description -> `make diagrams` renders wiring.svg / wiring.png
+# Docs: https://github.com/wireviz/WireViz/blob/master/docs/syntax.md
+connectors:
+  ESP32:
+    type: ESP32 DevKit v1
+    subtype: header (used pins only)
+    pinlabels: [3V3, GND, GPIO21 SDA, GPIO22 SCL]
+  BME280:
+    type: BME280 breakout
+    subtype: I2C, addr 0x76
+    pinlabels: [VIN, GND, SCL, SDA]
+
+cables:
+  W1:
+    category: bundle
+    wirecount: 4
+    gauge: 0.25 mm2
+    length: 0.2
+    colors: [RD, BK, BU, YE]
+
+connections:
+  -
+    - ESP32: [1, 2, 3, 4]
+    - W1: [1-4]
+    - BME280: [1, 2, 4, 3]

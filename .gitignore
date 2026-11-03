@@ -1,0 +1,47 @@
+# ---- Secrets (never commit) -------------------------------------------------
+secrets.yaml
+!secrets.example.yaml
+*.env
+.env*
+*.key
+*.pem
+*.age
+!*.sops.*
+
+# ---- Binary / full backups (keep on backup storage, not in git) -------------
+# MikroTik binary backup, UniFi controller backup, HA backups, Proxmox vzdump
+*.backup
+*.unf
+*.tar
+*.vma*
+*.zst
+# GitLab runner config (contains token)
+config.toml
+
+# ---- Home Assistant runtime state ------------------------------------------
+home-assistant/config/.storage/
+home-assistant/config/.cloud/
+home-assistant/config/deps/
+home-assistant/config/tts/
+home-assistant/config/backups/
+home-assistant/config/*.db
+home-assistant/config/*.db-*
+home-assistant/config/*.log*
+home-assistant/config/.HA_VERSION
+home-assistant/config/known_devices.yaml
+
+# ---- ESPHome build artifacts ------------------------------------------------
+.esphome/
+**/.pioenvs/
+**/.piolibdeps/
+
+# ---- Tooling / build output -------------------------------------------------
+.venv/
+build/
+site/
+docs/generated/
+__pycache__/
+.DS_Store
+
+# ESPHome: symlink to ../secrets.yaml (needed for !secret in included files), safe to commit
+!esphome/common/secrets.yaml

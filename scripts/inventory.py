@@ -1,0 +1,200 @@
+#!/usr/bin/env python3
+"""Render inventory.yaml as a Graphviz network diagram or Markdown tables.
+
+Usage:
+    inventory.py dot      inventory.yaml -o build/network.dot [--link-prefix ../../]
+    inventory.py markdown inventory.yaml -o docs/generated/inventory.md
+"""
+
+import argparse
+import html
+import sys
+from pathlib import Path
+
+import yaml
+
+TYPE_STYLE = {
+    "internet": {"shape": "ellipse", "fillcolor": "#E8E8E8"},
+    "router":   {"shape": "box", "fillcolor": "#D4E6F9"},
+    "switch":   {"shape": "box", "fillcolor": "#DCEFD9"},
+    "ap":       {"shape": "box", "fillcolor": "#FBEBD2"},
+    "server":   {"shape": "box3d", "fillcolor": "#E9DDF5"},
+    "guest":    {"shape": "component", "fillcolor": "#FFFFFF"},
+}
+
+
+def doc_url(page: str, prefix: str) -> str:
+    """docs/network/mikrotik.md -> <prefix>network/mikrotik/ (mkdocs directory URLs)."""
+    page = page.removesuffix(".md")
+    if page.endswith("index"):
+        page = page.removesuffix("index")
+    else:
+        page += "/"
+    return prefix + page
+
+
+def node_label(dev: dict) -> str:
+    lines = [f"<b>{html.escape(dev['name'])}</b>"]
+    for key in ("label", "vendor", "model"):
+        if dev.get(key):
+            lines.append(html.escape(str(dev[key])))
+    if dev.get("kind"):
+        lines.append(html.escape(f"{dev['kind']} {dev.get('vmid', '')}".strip()))
+    if dev.get("ip"):
+        lines.append(f"<font point-size='10'>{html.escape(dev['ip'])}</font>")
+    return "<" + "<br/>".join(lines) + ">"
+
+
+def render_dot(inv: dict, link_prefix: str) -> str:
+    vlans = {v["id"]: v for v in inv.get("vlans", [])}
+    devices = inv.get("devices", [])
+    out = [
+        f'graph "{inv["site"]["name"]}" {{',
+        '  graph [rankdir=TB, fontname="Helvetica", bgcolor="transparent", nodesep=0.6, ranksep=0.8];',
+        '  node  [style="rounded,filled", fontname="Helvetica", fontsize=12, color="#555555"];',
+        '  edge  [fontname="Helvetica", fontsize=10, color="#555555"];',
+        "",
+    ]
+
+    def node(dev: dict, indent: str = "  ") -> str:
+        attrs = dict(TYPE_STYLE.get(dev["type"], {}))
+        attrs["label"] = node_label(dev)
+        if dev.get("docs"):
+            attrs["URL"] = doc_url(dev["docs"], link_prefix)
+            attrs["target"] = "_top"
+            attrs["tooltip"] = f"{dev['name']} - open docs"
+        rendered = ", ".join(
+            f"{k}={v}" if k == "label" else f'{k}="{v}"' for k, v in attrs.items()
+        )
+        return f'{indent}"{dev["name"]}" [{rendered}];'
+
+    guests_by_host: dict[str, list[dict]] = {}
+    for dev in devices:
+        if dev["type"] == "guest":
+            guests_by_host.setdefault(dev["host"], []).append(dev)
+
+    for dev in devices:
+        if dev["type"] == "guest":
+            continue
+        guests = guests_by_host.get(dev["name"])
+        if not guests:
+            out.append(node(dev))
+            continue
+        out.append(f'  subgraph "cluster_{dev["name"]}" {{')
+        out.append(f'    label="{dev.get("vendor", dev["name"])}"; style="rounded,dashed"; color="#888888";')
+        out.append(node(dev, "    "))
+        for g in guests:
+            out.append(node(g, "    "))
+            gv = ",".join(str(v) for v in g.get("vlans", []))
+            out.append(f'    "{dev["name"]}" -- "{g["name"]}" [style=dotted, label="{gv and "VLAN " + gv}"];')
+        out.append("  }")
+
+    out.append("")
+    for link in inv.get("links", []):
+        carried = link.get("vlans", [])
+        ports = " ↔ ".join(p for p in (link.get("a_port"), link.get("b_port")) if p)
+        label_lines = [ports] if ports else []
+        if carried:
+            label_lines.append("VLAN " + ",".join(str(v) for v in carried))
+        attrs = {"label": "\\n".join(label_lines)}
+        if len(carried) == 1:
+            attrs["color"] = vlans.get(carried[0], {}).get("color", "#555555")
+            attrs["penwidth"] = "2"
+        elif len(carried) > 1:
+            attrs["penwidth"] = "3"  # trunk
+        rendered = ", ".join(f'{k}="{v}"' for k, v in attrs.items())
+        out.append(f'  "{link["a"]}" -- "{link["b"]}" [{rendered}];')
+
+    if vlans:
+        rows = "".join(
+            f'<tr><td bgcolor="{v.get("color", "#FFFFFF")}">  </td>'
+            f'<td align="left">VLAN {v["id"]} {html.escape(v["name"])} - {html.escape(v["subnet"])}</td></tr>'
+            for v in vlans.values()
+        )
+        out.append("")
+        out.append(
+            '  legend [shape=plaintext, style="", label=<<table border="0" cellborder="0" cellspacing="4">'
+            f'<tr><td colspan="2"><b>VLANs</b></td></tr>{rows}</table>>];'
+        )
+
+    out.append("}")
+    return "\n".join(out) + "\n"
+
+
+def md_table(headers: list[str], rows: list[list]) -> str:
+    lines = ["| " + " | ".join(headers) + " |", "|" + "---|" * len(headers)]
+    for row in rows:
+        lines.append("| " + " | ".join("" if c is None else str(c) for c in row) + " |")
+    return "\n".join(lines)
+
+
+def render_markdown(inv: dict) -> str:
+    devices = inv.get("devices", [])
+    parts = [
+        "# Inventory",
+        "",
+        "!!! note",
+        "    Generated from `inventory.yaml` - edit that file, not this page.",
+        "",
+        "## VLANs",
+        "",
+        md_table(
+            ["ID", "Name", "Subnet", "Gateway", "DHCP", "Purpose"],
+            [[v["id"], v["name"], v["subnet"], v.get("gateway"), v.get("dhcp"), v.get("purpose")]
+             for v in inv.get("vlans", [])],
+        ),
+        "",
+        "## Devices",
+        "",
+        md_table(
+            ["Name", "Type", "Vendor", "Model", "IP", "Location"],
+            [[d["name"], d["type"], d.get("vendor"), d.get("model"), d.get("ip"), d.get("location")]
+             for d in devices if d["type"] != "guest"],
+        ),
+        "",
+        "## Proxmox guests",
+        "",
+        md_table(
+            ["VMID", "Name", "Kind", "Host", "Runs", "IP", "VLANs"],
+            [[d.get("vmid"), d["name"], d.get("kind"), d.get("host"), d.get("vendor"), d.get("ip"),
+              ", ".join(str(v) for v in d.get("vlans", []))]
+             for d in devices if d["type"] == "guest"],
+        ),
+        "",
+        "## Physical links",
+        "",
+        md_table(
+            ["A", "Port", "B", "Port", "VLANs"],
+            [[l["a"], l.get("a_port"), l["b"], l.get("b_port"), ", ".join(str(v) for v in l.get("vlans", []))]
+             for l in inv.get("links", [])],
+        ),
+        "",
+        "## WiFi",
+        "",
+        md_table(
+            ["SSID", "VLAN", "Bands"],
+            [[w["ssid"], w.get("vlan"), ", ".join(w.get("bands", []))] for w in inv.get("wifi", [])],
+        ),
+        "",
+    ]
+    return "\n".join(parts)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("format", choices=["dot", "markdown"])
+    parser.add_argument("inventory", type=Path)
+    parser.add_argument("-o", "--output", type=Path, required=True)
+    parser.add_argument("--link-prefix", default="../../",
+                        help="prefix for doc links in SVG nodes, relative to where the SVG is served")
+    args = parser.parse_args()
+
+    inv = yaml.safe_load(args.inventory.read_text())
+    text = render_dot(inv, args.link_prefix) if args.format == "dot" else render_markdown(inv)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(text)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

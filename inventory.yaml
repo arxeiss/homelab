@@ -1,0 +1,118 @@
+# Single source of truth for the homelab.
+# `make diagrams` turns this into the network diagram, `make docs` into tables.
+#
+# Public repo! Do NOT put here: passwords, public IP / DDNS name, MAC addresses,
+# serial numbers. Internal RFC1918 addresses are fine.
+#
+# Everything marked TODO is a placeholder - replace with real values.
+
+site:
+  name: homelab
+  domain: home.arpa          # RFC 8375 domain for home networks
+
+vlans:
+  - id: 1
+    name: default
+    subnet: 192.168.1.0/24   # TODO
+    gateway: 192.168.1.1
+    dhcp: 192.168.1.100-192.168.1.199
+    color: "#4C78A8"
+    purpose: Trusted clients, infrastructure management
+  - id: 20                   # TODO: real VLAN ID
+    name: iot
+    subnet: 192.168.20.0/24  # TODO
+    gateway: 192.168.20.1
+    dhcp: 192.168.20.100-192.168.20.199
+    color: "#F58518"
+    purpose: IoT / ESPHome devices, no access to default VLAN
+
+# type: internet | router | switch | ap | server | guest
+# docs: page in docs/ (used for clickable diagram nodes)
+devices:
+  - name: internet
+    type: internet
+    label: ISP
+
+  - name: router
+    type: router
+    vendor: MikroTik
+    model: TODO
+    ip: 192.168.1.1
+    docs: network/mikrotik.md
+
+  - name: switch
+    type: switch
+    vendor: Ubiquiti UniFi
+    model: TODO
+    ip: 192.168.1.2
+    docs: network/unifi.md
+
+  - name: ap-1
+    type: ap
+    vendor: Ubiquiti UniFi
+    model: TODO
+    ip: 192.168.1.3
+    location: TODO
+    docs: network/unifi.md
+
+  - name: ap-2
+    type: ap
+    vendor: Ubiquiti UniFi
+    model: TODO
+    ip: 192.168.1.4
+    location: TODO
+    docs: network/unifi.md
+
+  - name: pve
+    type: server
+    vendor: Proxmox VE
+    model: TODO (CPU / RAM)
+    ip: 192.168.1.10
+    docs: servers/proxmox.md
+
+  # Proxmox guests (host: links them to the hypervisor)
+  - name: haos
+    type: guest
+    host: pve
+    kind: VM
+    vmid: 100
+    vendor: Home Assistant OS
+    ip: 192.168.1.20
+    vlans: [1, 20]
+    docs: home-assistant/index.md
+
+  - name: unifi-controller
+    type: guest
+    host: pve
+    kind: LXC
+    vmid: 101
+    vendor: UniFi Network Application
+    ip: 192.168.1.21
+    vlans: [1]
+    docs: network/unifi.md
+
+  - name: gitlab-runner
+    type: guest
+    host: pve
+    kind: LXC
+    vmid: 102
+    vendor: GitLab Runner
+    ip: 192.168.1.22
+    vlans: [1]
+    docs: servers/proxmox.md
+
+# Physical links. vlans: list of carried VLANs (more than one = trunk).
+links:
+  - { a: internet, a_port: "",     b: router, b_port: ether1, vlans: [] }
+  - { a: router,   a_port: ether2, b: switch, b_port: "1",    vlans: [1, 20] }
+  - { a: switch,   a_port: "2",    b: ap-1,   b_port: "",     vlans: [1, 20] }
+  - { a: switch,   a_port: "3",    b: ap-2,   b_port: "",     vlans: [1, 20] }
+  - { a: switch,   a_port: "4",    b: pve,    b_port: nic0,   vlans: [1, 20] }
+
+wifi:
+  - ssid: TODO-home
+    vlan: 1
+    bands: [2.4GHz, 5GHz]
+  - ssid: TODO-iot
+    vlan: 20
+    bands: [2.4GHz]
