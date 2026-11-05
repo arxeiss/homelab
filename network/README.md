@@ -2,6 +2,8 @@
 
 ![Network diagram](diagrams/network.svg)
 
+<sub>Generated from [`inventory.yaml`](../inventory.yaml) by `make generate`. Edit the inventory, not the SVG.</sub>
+
 IPs, devices, switch ports and WiFi networks: [inventory.md](inventory.md) (generated from
 [`inventory.yaml`](../inventory.yaml)). This page explains the design; device pages:
 [MikroTik](mikrotik/README.md), [UniFi](unifi/README.md), [Proxmox](../servers/proxmox/README.md).

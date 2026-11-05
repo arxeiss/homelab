@@ -1,112 +1,140 @@
 #!/usr/bin/env python3
-"""Render inventory.yaml as a Graphviz network diagram or Markdown tables.
+"""Render inventory.yaml as a D2 network diagram or Markdown tables.
 
 Usage:
-    inventory.py dot      inventory.yaml -o build/network.dot
+    inventory.py d2       inventory.yaml -o build/network.d2
     inventory.py markdown inventory.yaml -o network/inventory.md
+
+The D2 file imports the shared look from assets/d2/style.d2; `make generate`
+renders it to network/diagrams/network.svg.
 """
 
 import argparse
-import html
 import os
 import sys
 from pathlib import Path
 
 import yaml
 
+ASSETS = Path(__file__).resolve().parent.parent / "assets" / "d2"
+
+# inventory type -> (style.d2 class, icon in assets/d2/icons/)
 TYPE_STYLE = {
-    "internet": {"shape": "ellipse", "fillcolor": "#E8E8E8"},
-    "router":   {"shape": "box", "fillcolor": "#D4E6F9"},
-    "switch":   {"shape": "box", "fillcolor": "#DCEFD9"},
-    "ap":       {"shape": "box", "fillcolor": "#FBEBD2"},
-    "server":   {"shape": "box3d", "fillcolor": "#E9DDF5"},
-    "guest":    {"shape": "component", "fillcolor": "#FFFFFF"},
-    "client":   {"shape": "box", "fillcolor": "#F4F4F4", "style": "rounded,filled,dashed", "fontsize": "10"},
+    "internet": ("internet", "world"),
+    "router":   ("network", "router"),
+    "switch":   ("switch", "topology-star-3"),
+    "ap":       ("wireless", "access-point"),
+    "server":   ("compute", "server"),
+    "guest":    ("guest", None),
+    "client":   ("client", None),
 }
+GUEST_ICON = {"LXC": "box", "VM": "cube"}
+# Wired clients have no type of their own; pick an icon from the name/label.
+CLIENT_ICON = (("camera", "device-cctv"), ("nvr", "video"), ("alarm", "shield-lock"))
 
 
-def node_label(dev: dict) -> str:
-    lines = [f"<b>{html.escape(dev['name'])}</b>"]
+def d2_str(s: str) -> str:
+    return '"' + str(s).replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n") + '"'
+
+
+def device_lines(dev: dict) -> list[str]:
+    lines = [dev["name"]]
     for key in ("label", "vendor", "model"):
-        if dev.get(key):
-            lines.append(html.escape(str(dev[key])))
+        # Server vendor (Proxmox VE x.y) is already the title of its group box.
+        if dev.get(key) and not (dev["type"] == "server" and key == "vendor"):
+            lines.append(str(dev[key]))
     if dev.get("kind"):
-        lines.append(html.escape(f"{dev['kind']} {dev.get('vmid', '')}".strip()))
+        lines.append(f"{dev['kind']} {dev.get('vmid', '')}".strip())
     if dev.get("ip"):
-        ip = dev["ip"] + (" (DHCP)" if dev.get("ip_mode") == "dhcp" else "")
-        lines.append(f"<font point-size='10'>{html.escape(ip)}</font>")
-    return "<" + "<br/>".join(lines) + ">"
+        lines.append(dev["ip"] + (" (DHCP)" if dev.get("ip_mode") == "dhcp" else ""))
+    return lines
 
 
-def render_dot(inv: dict) -> str:
+def device_icon(dev: dict) -> str | None:
+    cls, icon = TYPE_STYLE.get(dev["type"], ("guest", None))
+    if dev["type"] == "guest":
+        icon = GUEST_ICON.get(dev.get("kind", ""))
+    if dev["type"] == "client":
+        text = f"{dev['name']} {dev.get('label', '')}".lower()
+        icon = next((i for word, i in CLIENT_ICON if word in text), None)
+    return icon
+
+
+def render_d2(inv: dict, out_dir: Path) -> str:
     vlans = {v["id"]: v for v in inv.get("vlans", [])}
     devices = inv.get("devices", [])
+    rel = Path(os.path.relpath(ASSETS, out_dir.resolve()))
     out = [
-        f'graph "{inv["site"]["name"]}" {{',
-        '  graph [rankdir=TB, fontname="Helvetica", bgcolor="transparent", nodesep=0.6, ranksep=0.8];',
-        '  node  [style="rounded,filled", fontname="Helvetica", fontsize=12, color="#555555"];',
-        '  edge  [fontname="Helvetica", fontsize=10, color="#555555"];',
+        "# Generated from inventory.yaml by scripts/inventory.py - do not edit.",
+        f"...@{(rel / 'style.d2').as_posix()}",
+        "direction: down",
         "",
     ]
 
-    def node(dev: dict, indent: str = "  ") -> str:
-        attrs = dict(TYPE_STYLE.get(dev["type"], {}))
-        attrs["label"] = node_label(dev)
-        rendered = ", ".join(
-            f"{k}={v}" if k == "label" else f'{k}="{v}"' for k, v in attrs.items()
-        )
-        return f'{indent}"{dev["name"]}" [{rendered}];'
+    def node(dev: dict, indent: str) -> list[str]:
+        cls = TYPE_STYLE.get(dev["type"], ("guest", None))[0]
+        if "TODO" in str(dev.get("ip", "")):
+            cls = "todo"
+        lines = device_lines(dev)
+        icon = device_icon(dev)
+        # D2 sizes icons to the shape, so size the card from its text and keep
+        # the icon in a fixed column on the left.
+        width = int(7.6 * max(len(line) for line in lines)) + (88 if icon else 40)
+        height = 20 * len(lines) + 34
+        body = [f"class: {cls}", f"width: {width}", f"height: {height}"]
+        if icon:
+            body += [f"icon: {(rel / 'icons' / (icon + '.svg')).as_posix()}",
+                     "icon.near: center-left", "label.near: center-right"]
+        pad = indent + "  "
+        return ([f"{indent}{d2_str(dev['name'])}: {d2_str(chr(10).join(lines))} {{"]
+                + [pad + b for b in body] + [f"{indent}}}"])
 
     guests_by_host: dict[str, list[dict]] = {}
     for dev in devices:
         if dev["type"] == "guest":
             guests_by_host.setdefault(dev["host"], []).append(dev)
 
+    path: dict[str, str] = {}
     for dev in devices:
         if dev["type"] == "guest":
             continue
         guests = guests_by_host.get(dev["name"])
         if not guests:
-            out.append(node(dev))
+            out += node(dev, "")
+            path[dev["name"]] = d2_str(dev["name"])
             continue
-        out.append(f'  subgraph "cluster_{dev["name"]}" {{')
-        out.append(f'    label="{dev.get("vendor", dev["name"])}"; style="rounded,dashed"; color="#888888";')
-        out.append(node(dev, "    "))
+        box = d2_str(dev["name"] + "-host")
+        out.append(f"{box}: {d2_str(dev.get('vendor', dev['name']))} {{")
+        out.append("  class: group")
+        out += node(dev, "  ")
+        path[dev["name"]] = f"{box}.{d2_str(dev['name'])}"
         for g in guests:
-            out.append(node(g, "    "))
-            gv = ",".join(str(v) for v in g.get("vlans", []))
-            out.append(f'    "{dev["name"]}" -- "{g["name"]}" [style=dotted, label="{gv and "VLAN " + gv}"];')
-        out.append("  }")
+            out += node(g, "  ")
+            out.append(f"  {d2_str(dev['name'])} -- {d2_str(g['name'])}: {{ class: soft }}")
+        out.append("}")
 
     out.append("")
     for link in inv.get("links", []):
         carried = link.get("vlans", [])
-        ports = " ↔ ".join(p for p in (link.get("a_port"), link.get("b_port")) if p)
-        label_lines = [ports] if ports else []
+        ports = " → ".join(p for p in (link.get("a_port"), link.get("b_port")) if p)
+        parts = [ports] if ports else []
         if carried:
-            label_lines.append("VLAN " + ",".join(str(v) for v in carried))
-        attrs = {"label": "\\n".join(label_lines)}
+            parts.append("VLAN " + ",".join(str(v) for v in carried))
+        edge = f"{path[link['a']]} -- {path[link['b']]}: {d2_str(' · '.join(parts))}"
         if len(carried) == 1:
-            attrs["color"] = vlans.get(carried[0], {}).get("color", "#555555")
-            attrs["penwidth"] = "2"
-        elif len(carried) > 1:
-            attrs["penwidth"] = "3"  # trunk
-        rendered = ", ".join(f'{k}="{v}"' for k, v in attrs.items())
-        out.append(f'  "{link["a"]}" -- "{link["b"]}" [{rendered}];')
+            color = vlans.get(carried[0], {}).get("color", "#868E96")
+            out.append(f'{edge} {{ class: cable; style.stroke: "{color}" }}')
+        else:
+            out.append(f"{edge} {{ class: {'trunk' if carried else 'cable'} }}")
 
     if vlans:
-        rows = "".join(
-            f'<tr><td bgcolor="{v.get("color", "#FFFFFF")}">  </td>'
-            f'<td align="left">VLAN {v["id"]} {html.escape(v["name"])} - {html.escape(v["subnet"])}</td></tr>'
-            for v in vlans.values()
-        )
-        out.append("")
-        out.append(
-            '  legend [shape=plaintext, style="", label=<<table border="0" cellborder="0" cellspacing="4">'
-            f'<tr><td colspan="2"><b>VLANs</b></td></tr>{rows}</table>>];'
-        )
-
-    out.append("}")
+        out += ["", "vars: {", "  d2-legend: {"]
+        for v in vlans.values():
+            text = "VLAN {id} {name} · {subnet}".format(**v)
+            color = d2_str(v.get("color", "#868E96"))
+            out.append(f"    v{v['id']}: {d2_str(text)} {{ style: {{ fill: {color}; stroke: {color} }} }}")
+        out.append('    trunk: "Trunk (several VLANs)" { style: { fill: "#495057"; stroke: "#495057" } }')
+        out += ["  }", "}"]
     return "\n".join(out) + "\n"
 
 
@@ -183,14 +211,14 @@ def render_markdown(inv: dict, out_dir: Path) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("format", choices=["dot", "markdown"])
+    parser.add_argument("format", choices=["d2", "markdown"])
     parser.add_argument("inventory", type=Path)
     parser.add_argument("-o", "--output", type=Path, required=True)
     args = parser.parse_args()
 
     inv = yaml.safe_load(args.inventory.read_text())
-    if args.format == "dot":
-        text = render_dot(inv)
+    if args.format == "d2":
+        text = render_d2(inv, args.output.parent)
     else:
         text = render_markdown(inv, args.output.parent)
     args.output.parent.mkdir(parents=True, exist_ok=True)

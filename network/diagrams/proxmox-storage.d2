@@ -1,0 +1,63 @@
+# Hand-written diagram: Proxmox storage and backup flow.
+# Facts: servers/proxmox/README.md (storages, guests) and servers/backups.md (jobs).
+# Each guest is backed up to the *other* SSD.
+...@../../assets/d2/style.d2
+
+direction: down
+
+pve: "pve (Proxmox host)" {
+  class: group
+  # Grid: guests on top, each above the SSD it runs on; backups cross to the other SSD.
+  grid-rows: 2
+  grid-columns: 2
+  horizontal-gap: 200
+  vertical-gap: 80
+
+  lxc: "unifi-os-server · LXC 100\ngitlab-runner · LXC 101" {
+    class: guest
+    width: 250
+    height: 74
+    icon: ../../assets/d2/icons/box.svg
+    icon.near: center-left
+    label.near: center-center
+  }
+  vm: "homeassistant · VM 102" {
+    class: guest
+    width: 250
+    height: 74
+    icon: ../../assets/d2/icons/cube.svg
+    icon.near: center-left
+    label.near: center-center
+  }
+
+  ssd2: "SSD 2 · Transcend 128 GB" {
+    class: group
+    width: 300
+    grid-columns: 1
+    vertical-gap: 100
+    disk2: "disk2\nVM/CT disks" { class: storage; shape: cylinder; width: 170 }
+    backup-disk2: "backup-disk2\nbackups" { class: storage; shape: cylinder; width: 170 }
+  }
+  ssd1: "SSD 1 · SanDisk 128 GB" {
+    class: group
+    width: 300
+    grid-columns: 1
+    vertical-gap: 100
+    local-lvm: "local-lvm\nVM/CT disks" { class: storage; shape: cylinder; width: 170 }
+    local: "local\nbackups, ISO, templates" { class: storage; shape: cylinder; width: 170 }
+  }
+
+  lxc -> ssd2.disk2: { class: cable }
+  vm -> ssd1.local-lvm: { class: cable }
+  # Both jobs: vzdump daily 03:00, keep 2. One label, both would print on the same spot.
+  ssd2.disk2 -> ssd1.local: "backup: vzdump daily 03:00, keep 2" { class: trunk }
+  ssd1.local-lvm -> ssd2.backup-disk2: { class: trunk }
+}
+
+offsite: "Offsite copy\nTODO (PBS / rclone)" {
+  class: todo
+  shape: cylinder
+}
+
+pve.ssd2.backup-disk2 -> offsite: { class: planned }
+pve.ssd1.local -> offsite: { class: planned }

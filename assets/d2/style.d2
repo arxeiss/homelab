@@ -1,0 +1,53 @@
+# Shared look for every D2 diagram in this repo.
+#
+# Use it at the top of a .d2 file (path is relative to that file):
+#   ...@../../assets/d2/style.d2
+# then give shapes a class:
+#   esp: "esp32-kitchen\nESP32-C3" { class: device; icon: ../../assets/d2/icons/cpu.svg }
+#
+# Icons: assets/d2/icons/ (Tabler, MIT - see README.md there).
+# Rendered by `make generate` (D2 in Docker, version pinned in the Makefile).
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 0
+    pad: 40
+  }
+}
+
+classes: {
+  # Generic card. The colour classes below build on it.
+  card: {
+    style: {
+      border-radius: 8
+      stroke-width: 2
+      font-color: "#212529"
+      bold: false
+      fill: "#FFFFFF"
+      stroke: "#ADB5BD"
+    }
+  }
+  # Colours by role - reuse these in device/flow diagrams too.
+  internet: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#F1F3F5"; stroke: "#868E96" } }
+  network: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#E7F0FA"; stroke: "#4C78A8" } }
+  switch: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#E8F5E6"; stroke: "#54A24B" } }
+  wireless: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#FDF2E1"; stroke: "#E09B3D" } }
+  compute: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#F1EBF9"; stroke: "#8E6CC0" } }
+  guest: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#FFFFFF"; stroke: "#B9A5DA" } }
+  device: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#E6F6F4"; stroke: "#2A9D8F" } }
+  storage: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#EAF1F8"; stroke: "#5B7FA6" } }
+  client: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#212529"; fill: "#F8F9FA"; stroke: "#ADB5BD"; stroke-dash: 3 } }
+  todo: { style: { border-radius: 8; stroke-width: 2; bold: false; font-color: "#868E96"; fill: "#FFFFFF"; stroke: "#CED4DA"; stroke-dash: 4 } }
+
+  # Dashed box around things that run inside something else (host, enclosure).
+  group: {
+    style: { fill: "#FAF8FD"; stroke: "#B9A5DA"; stroke-dash: 4; border-radius: 12; font-color: "#495057"; bold: false }
+  }
+
+  # Edges
+  cable: { style: { stroke: "#868E96"; stroke-width: 2; font-color: "#495057" } }
+  trunk: { style: { stroke: "#495057"; stroke-width: 4; font-color: "#495057" } }
+  soft: { style: { stroke: "#B9A5DA"; stroke-width: 2; stroke-dash: 3; font-color: "#495057" } }
+  planned: { style: { stroke: "#ADB5BD"; stroke-width: 2; stroke-dash: 5; font-color: "#868E96" } }
+}

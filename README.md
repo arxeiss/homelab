@@ -49,6 +49,8 @@ Then commit. The pre-commit hook blocks secrets; CI checks that `inventory.md` m
   and the network diagram (both committed, CI checks the Markdown is up to date).
   Other pages explain *why* and *how* and link to the inventory instead of repeating it.
 - Each folder's `README.md` documents that part of the setup.
+- Diagrams are [D2](https://d2lang.com) files rendered to committed SVGs, see
+  [assets/d2/README.md](assets/d2/README.md).
 - No secrets in this repo. Secrets are referenced by name (e.g. `!secret wifi_password`).
 
 ## Layout
@@ -60,7 +62,7 @@ ACCESS.md                 read-only accounts + credentials.env.example
 network/
   README.md               design, firewall intent
   inventory.md            generated from inventory.yaml
-  diagrams/               generated network.svg + hand-written *.dot
+  diagrams/               network.svg (generated) + hand-written *.d2 -> *.svg
   mikrotik/               README + export.rsc (`make mikrotik-export`, secrets hidden)
   unifi/                  README (controller settings; no .unf!)
 servers/
@@ -72,12 +74,13 @@ esphome/
   common/                 shared YAML (wifi, api, ota, ...)
   devices/<name>/         <name>.yaml + wiring.yaml + README.md + photos/
 scripts/                  generators + read-only status script used by the Makefile
+assets/d2/                shared diagram style + icons (see its README)
 ```
 
 ## Quick start
 
 ```bash
-sudo apt install graphviz   # needed for all diagrams
+sudo apt install graphviz   # only for ESPHome wiring (WireViz); D2 diagrams run in Docker
 make setup                  # Python venv: wireviz, pre-commit
 make hooks                  # pre-commit hooks incl. gitleaks secret scanning
 make generate               # regenerate inventory.md + network/wiring diagrams

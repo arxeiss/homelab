@@ -11,13 +11,20 @@ STAMP := $(VENV)/.installed
 INVENTORY   := inventory.yaml
 INVENTORY_MD := network/inventory.md
 NET_DIAGRAM := network/diagrams/network
-DOT_SRC     := $(wildcard network/diagrams/*.dot)
+# Hand-written D2 diagrams anywhere in the repo -> .svg next to them
+D2_SRC      := $(patsubst ./%,%,$(shell find . -name '*.d2' -not -path './assets/*' -not -path './build/*' \
+                 -not -path './.*' -not -path '*/.esphome/*'))
+D2_STYLE    := assets/d2/style.d2 $(wildcard assets/d2/icons/*.svg)
 WIRING_SRC  := $(wildcard esphome/devices/*/wiring.yaml)
 
 GENERATED := $(INVENTORY_MD) \
             $(NET_DIAGRAM).svg \
-            $(DOT_SRC:.dot=.svg) \
+            $(D2_SRC:.d2=.svg) \
             $(WIRING_SRC:.yaml=.svg)
+
+# ---- D2 diagrams (runs in Docker, pinned so output is reproducible) ---------
+D2_IMAGE ?= terrastruct/d2:v0.9.0
+D2       := docker run --rm -u "$$(id -u):$$(id -g)" -e HOME=/tmp -v "$(CURDIR)":/repo -w /repo $(D2_IMAGE)
 
 # ---- ESPHome (runs in Docker, no local install needed) ----------------------
 ESPHOME_IMAGE ?= ghcr.io/esphome/esphome:stable
@@ -54,21 +61,27 @@ check-graphviz:
 
 # ---- Generated files (committed) ---------------------------------------------
 .PHONY: generate
-generate: check-graphviz $(GENERATED) ## Regenerate network/inventory.md and all diagrams (network, *.dot, ESPHome wiring)
+generate: $(GENERATED) ## Regenerate network/inventory.md and all diagrams (network, *.d2, ESPHome wiring)
 
 $(INVENTORY_MD): $(INVENTORY) scripts/inventory.py | $(STAMP)
 	$(PY) scripts/inventory.py markdown $< -o $@
 
-build/network.dot: $(INVENTORY) scripts/inventory.py | $(STAMP)
-	$(PY) scripts/inventory.py dot $< -o $@
+build/network.d2: $(INVENTORY) scripts/inventory.py | $(STAMP)
+	$(PY) scripts/inventory.py d2 $< -o $@
 
-$(NET_DIAGRAM).svg: build/network.dot
-	dot -Tsvg $< -o $@
+$(NET_DIAGRAM).svg: build/network.d2 $(D2_STYLE)
+	$(D2) $< $@ && chmod 644 $@
 
-network/diagrams/%.svg: network/diagrams/%.dot
-	dot -Tsvg $< -o $@
+%.svg: %.d2 $(D2_STYLE)
+	$(D2) $< $@ && chmod 644 $@
 
-esphome/devices/%/wiring.svg: esphome/devices/%/wiring.yaml | $(STAMP)
+.PHONY: icon
+icon: ## Add Tabler icon(s) for D2 diagrams (NAME="thermometer droplet", see tabler.io/icons)
+	@test -n "$(NAME)" || { echo 'Usage: make icon NAME="thermometer droplet"'; exit 1; }
+	python3 scripts/fetch_icon.py $(NAME)
+
+# WireViz renders through Graphviz, so wiring diagrams still need `dot` locally.
+esphome/devices/%/wiring.svg: esphome/devices/%/wiring.yaml | $(STAMP) check-graphviz
 	$(BIN)/wireviz -f s -o $(@D) -O wiring $<
 
 # ---- Lint ---------------------------------------------------------------------
