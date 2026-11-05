@@ -9,13 +9,21 @@ jobs:
     name: Lint + secret scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0   # gitleaks scans history
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
-      - uses: pre-commit/action@v3.0.1
+          python-version: "3.x"
+      # pre-commit/action is unmaintained (pins Node 20 actions/cache@v4), so run pre-commit directly.
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: pre-commit
+        run: |
+          pip install -q pre-commit
+          pre-commit run --all-files --show-diff-on-failure --color=always
       - name: network/inventory.md is up to date
         run: |
           pip install -q pyyaml
@@ -27,7 +35,7 @@ jobs:
     name: Validate ESPHome configs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use dummy secrets
         run: cp esphome/secrets.example.yaml esphome/secrets.yaml
       - name: esphome config
