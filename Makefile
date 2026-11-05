@@ -16,11 +16,14 @@ D2_SRC      := $(patsubst ./%,%,$(shell find . -name '*.d2' -not -path './assets
                  -not -path './.*' -not -path '*/.esphome/*'))
 D2_STYLE    := assets/d2/style.d2 $(wildcard assets/d2/icons/*.svg)
 WIRING_SRC  := $(wildcard esphome/devices/*/wiring.yaml)
+# Hand-placed schematics (stdlib Python script -> SVG), for anything WireViz draws too wide
+SCHEM_SRC   := $(wildcard esphome/devices/*/schematic.py)
 
 GENERATED := $(INVENTORY_MD) \
             $(NET_DIAGRAM).svg \
             $(D2_SRC:.d2=.svg) \
-            $(WIRING_SRC:.yaml=.svg)
+            $(WIRING_SRC:.yaml=.svg) \
+            $(SCHEM_SRC:.py=.svg)
 
 # ---- D2 diagrams (runs in Docker, pinned so output is reproducible) ---------
 D2_IMAGE ?= terrastruct/d2:v0.9.0
@@ -81,6 +84,9 @@ icon: ## Add Tabler icon(s) for D2 diagrams (NAME="thermometer droplet", see tab
 	python3 scripts/fetch_icon.py $(NAME)
 
 # WireViz renders through Graphviz, so wiring diagrams still need `dot` locally.
+esphome/devices/%/schematic.svg: esphome/devices/%/schematic.py
+	python3 $< $@
+
 esphome/devices/%/wiring.svg: esphome/devices/%/wiring.yaml | $(STAMP) check-graphviz
 	$(BIN)/wireviz -f s -o $(@D) -O wiring $<
 

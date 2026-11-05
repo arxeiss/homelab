@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2870" height="900" viewBox="0 0 2870 900">
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<rect x="20" y="150" width="1890" height="650" rx="14" fill="#FAF8FD" stroke="#B9A5DA" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="36" y="174" font-size="15" text-anchor="start" font-weight="bold" fill="#495057" font-family="Helvetica, Arial, sans-serif">Controller board (in the rack)</text>
+<rect x="2150" y="150" width="700" height="650" rx="14" fill="#FAF8FD" stroke="#B9A5DA" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="2166" y="174" font-size="15" text-anchor="start" font-weight="bold" fill="#495057" font-family="Helvetica, Arial, sans-serif">At the pump (~5 m away)</text>
+<text x="30" y="75" font-size="14" text-anchor="start" font-weight="bold" fill="#F08C00" font-family="Helvetica, Arial, sans-serif">+5 V</text>
+<text x="30" y="115" font-size="14" text-anchor="start" font-weight="bold" fill="#7B4FC9" font-family="Helvetica, Arial, sans-serif">+3.3 V</text>
+<text x="30" y="745" font-size="14" text-anchor="start" font-weight="bold" fill="#D62828" font-family="Helvetica, Arial, sans-serif">+12 V</text>
+<rect x="40" y="300" width="130" height="90" rx="8" fill="#F1F3F5" stroke="#495057" stroke-width="2"/>
+<text x="105.0" y="337.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">12 V DC</text>
+<text x="105.0" y="355.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">power supply</text>
+<text x="75" y="383" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">+12V</text>
+<polyline points="75,390 75,408" fill="none" stroke="#D62828" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="135" y="383" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="135,390 135,408" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="135,408 135,422" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="121,422 149,422" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="126,427 144,427" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="131,432 139,432" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="230" y="200" width="170" height="130" rx="8" fill="#F1EBF9" stroke="#8E6CC0" stroke-width="2"/>
+<text x="315.0" y="257.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">Buck 12 -&gt; 5 V</text>
+<text x="315.0" y="275.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">SET TO 5.0 V FIRST</text>
+<text x="315.0" y="289.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(dratek 3133)</text>
+<text x="255" y="323" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">IN+</text>
+<polyline points="255,330 255,348" fill="none" stroke="#D62828" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="310" y="323" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">IN-</text>
+<polyline points="310,330 310,348" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="345" y="323" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">OUT-</text>
+<polyline points="345,330 345,348" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="375" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">OUT+</text>
+<polyline points="375,200 375,182" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="310,348 310,362" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="296,362 324,362" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="301,367 319,367" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="306,372 314,372" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="345,348 345,362" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="331,362 359,362" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="336,367 354,367" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="341,372 349,372" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="460" y="200" width="150" height="110" rx="8" fill="#F1EBF9" stroke="#8E6CC0" stroke-width="2"/>
+<text x="535.0" y="247.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">AMS1117</text>
+<text x="535.0" y="265.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">5 -&gt; 3.3 V, 800 mA</text>
+<text x="485" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VIN</text>
+<polyline points="485,200 485,182" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="585" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VOUT</text>
+<polyline points="585,200 585,182" fill="none" stroke="#7B4FC9" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="535" y="303" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="535,310 535,328" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="535,328 535,342" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="521,342 549,342" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="526,347 544,347" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="531,352 539,352" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="670,110 670,200.0" fill="none" stroke="#7B4FC9" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="656,200.0 684,200.0" fill="none" stroke="#7B4FC9" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 656 214.0 Q 670 206.0 684 214.0" fill="none" stroke="#212529" stroke-width="3"/>
+<text x="650" y="195.0" font-size="13" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">+</text>
+<polyline points="670,210.0 670,300" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="670,300 670,314" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="656,314 684,314" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="661,319 679,319" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="666,324 674,324" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="692" y="205.0" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">C1</text>
+<text x="692" y="220.0" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">470 µF</text>
+<text x="692" y="235.0" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">10 V</text>
+<rect x="760" y="200" width="220" height="230" rx="8" fill="#E6F6F4" stroke="#2A9D8F" stroke-width="2"/>
+<text x="870.0" y="307.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">ESP8266</text>
+<text x="870.0" y="325.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">ESP-12F board</text>
+<text x="870.0" y="339.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(dratek 1351)</text>
+<text x="800" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VCC (3V3)</text>
+<polyline points="800,200 800,182" fill="none" stroke="#7B4FC9" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="800" y="423" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="800,430 800,448" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="974" y="264" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GPIO14</text>
+<polyline points="980,260 998,260" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="974" y="314" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GPIO12</text>
+<polyline points="980,310 998,310" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="974" y="394" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GPIO5</text>
+<polyline points="980,390 998,390" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="800,448 800,462" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="786,462 814,462" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="791,467 809,467" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="796,472 804,472" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="870" y="450" font-size="11" text-anchor="middle" font-weight="normal" fill="#868E96" font-family="Helvetica, Arial, sans-serif" font-style="italic">GPIOs proposed - check</text>
+<text x="870" y="464" font-size="11" text-anchor="middle" font-weight="normal" fill="#868E96" font-family="Helvetica, Arial, sans-serif" font-style="italic">onboard LED / buttons</text>
+<rect x="1080" y="200" width="230" height="180" rx="8" fill="#F1EBF9" stroke="#8E6CC0" stroke-width="2"/>
+<text x="1195.0" y="282.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">Level shifter</text>
+<text x="1195.0" y="300.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">BSS138, ch 3+4 unused</text>
+<text x="1195.0" y="314.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(dratek 1481)</text>
+<text x="1110" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">LV</text>
+<polyline points="1110,200 1110,182" fill="none" stroke="#7B4FC9" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1280" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">HV</text>
+<polyline points="1280,200 1280,182" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1086" y="264" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">LV1</text>
+<polyline points="1080,260 1062,260" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1086" y="314" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">LV2</text>
+<polyline points="1080,310 1062,310" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1304" y="264" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">HV1</text>
+<polyline points="1310,260 1328,260" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1304" y="314" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">HV2</text>
+<polyline points="1310,310 1328,310" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1195" y="373" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="1195,380 1195,398" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1195,398 1195,412" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1181,412 1209,412" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1186,417 1204,417" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1191,422 1199,422" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1400" y="200" width="160" height="120" rx="8" fill="#E6F6F4" stroke="#2A9D8F" stroke-width="2"/>
+<text x="1480.0" y="252.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">DHT22 #1</text>
+<text x="1480.0" y="270.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">rack</text>
+<text x="1480.0" y="284.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(module, pull-up on board)</text>
+<text x="1430" y="215" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VDD</text>
+<polyline points="1430,200 1430,182" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1406" y="264" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">DATA</text>
+<polyline points="1400,260 1382,260" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1520" y="313" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="1520,320 1520,338" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1520,338 1520,352" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1506,352 1534,352" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1511,357 1529,357" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1516,362 1524,362" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1480" y="410" width="230" height="180" rx="8" fill="#F1EBF9" stroke="#8E6CC0" stroke-width="2"/>
+<text x="1595.0" y="438" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">MOSFET module</text>
+<text x="1595.0" y="456" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">FR120N</text>
+<text x="1595.0" y="470" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(dratek 123950)</text>
+<text x="1486" y="519" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">SIG / PWM</text>
+<polyline points="1480,515 1462,515" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1520" y="583" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="1520,590 1520,608" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1590" y="583" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VIN+</text>
+<polyline points="1590,590 1590,608" fill="none" stroke="#D62828" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1660" y="583" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VIN-</text>
+<polyline points="1660,590 1660,608" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1704" y="494" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">OUT+ (=VIN+)</text>
+<polyline points="1710,490 1728,490" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1704" y="544" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">OUT- (switched)</text>
+<polyline points="1710,540 1728,540" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1520,608 1520,622" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1506,622 1534,622" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1511,627 1529,627" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1516,632 1524,632" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1660,608 1660,622" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1646,622 1674,622" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1651,627 1669,627" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1656,632 1664,632" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1810" y="190" width="70" height="570" rx="8" fill="#FFFFFF" stroke="#495057" stroke-width="2"/>
+<text x="1845.0" y="475.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<rect x="2180" y="190" width="70" height="570" rx="8" fill="#FFFFFF" stroke="#495057" stroke-width="2"/>
+<text x="2215.0" y="475.0" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<text x="1845" y="782" font-size="13" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">X1</text>
+<text x="2215" y="782" font-size="13" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">X2</text>
+<text x="1816" y="234" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,230 1792,230" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="234" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,230 2268,230" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="234" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">4 +5V</text>
+<text x="2215" y="234" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">4 +5V</text>
+<polyline points="1880,230 2180,230" fill="none" stroke="#1C7ED6" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1816" y="344" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,340 1792,340" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="344" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,340 2268,340" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="344" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">3 DATA</text>
+<text x="2215" y="344" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">3 DATA</text>
+<polyline points="1880,340 2180,340" fill="none" stroke="#ADB5BD" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1880,340 2180,340" fill="none" stroke="#2B8A3E" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 5"/>
+<text x="1816" y="494" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,490 1792,490" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="494" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,490 2268,490" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="494" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">1 PWM+</text>
+<text x="2215" y="494" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">1 PWM+</text>
+<polyline points="1880,490 2180,490" fill="none" stroke="#ADB5BD" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1880,490 2180,490" fill="none" stroke="#F08C00" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 5"/>
+<text x="1816" y="544" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,540 1792,540" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="544" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,540 2268,540" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="544" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">2 PWM-</text>
+<text x="2215" y="544" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">2 PWM-</text>
+<polyline points="1880,540 2180,540" fill="none" stroke="#F08C00" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1816" y="604" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,600 1792,600" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="604" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,600 2268,600" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="604" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">5 GND</text>
+<text x="2215" y="604" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">5 GND</text>
+<polyline points="1880,600 2180,600" fill="none" stroke="#ADB5BD" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1880,600 2180,600" fill="none" stroke="#1C7ED6" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 5"/>
+<text x="1816" y="644" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,640 1792,640" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="644" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,640 2268,640" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="644" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">6 GND</text>
+<text x="2215" y="644" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">6 GND</text>
+<polyline points="1880,640 2180,640" fill="none" stroke="#2B8A3E" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1816" y="684" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,680 1792,680" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="684" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,680 2268,680" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="684" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">7 spare</text>
+<text x="2215" y="684" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">7 spare</text>
+<polyline points="1880,680 2180,680" fill="none" stroke="#ADB5BD" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1880,680 2180,680" fill="none" stroke="#8B5A2B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 5"/>
+<text x="1816" y="724" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="1810,720 1792,720" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2244" y="724" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif"></text>
+<polyline points="2250,720 2268,720" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1845" y="724" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">8 spare</text>
+<text x="2215" y="724" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">8 spare</text>
+<polyline points="1880,720 2180,720" fill="none" stroke="#8B5A2B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2030.0" y="182" font-size="13" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">UTP cat5e ~5 m</text>
+<text x="2030.0" y="790" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">T568B colours</text>
+<text x="2030.0" y="804" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(dashed = white/colour)</text>
+<polyline points="375,70 1790,70" fill="none" stroke="#F08C00" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="585,110 1110,110" fill="none" stroke="#7B4FC9" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="75,740 1590,740" fill="none" stroke="#D62828" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="375,182 375,70" fill="none" stroke="#F08C00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="485,182 485,70" fill="none" stroke="#F08C00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="485" cy="70" r="4.5" fill="#F08C00"/>
+<polyline points="1280,182 1280,70" fill="none" stroke="#F08C00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="1280" cy="70" r="4.5" fill="#F08C00"/>
+<polyline points="1430,182 1430,70" fill="none" stroke="#F08C00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="1430" cy="70" r="4.5" fill="#F08C00"/>
+<polyline points="585,182 585,110" fill="none" stroke="#7B4FC9" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="800,182 800,110" fill="none" stroke="#7B4FC9" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="800" cy="110" r="4.5" fill="#7B4FC9"/>
+<polyline points="1110,182 1110,110" fill="none" stroke="#7B4FC9" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="75,408 75,740" fill="none" stroke="#D62828" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="255,348 255,740" fill="none" stroke="#D62828" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="255" cy="740" r="4.5" fill="#D62828"/>
+<polyline points="1590,608 1590,740" fill="none" stroke="#D62828" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="670" cy="110" r="4.5" fill="#7B4FC9"/>
+<polyline points="998,260 1062,260" fill="none" stroke="#1C7ED6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="998,310 1062,310" fill="none" stroke="#1C7ED6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1328,260 1382,260" fill="none" stroke="#1C7ED6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="998,390 1010,390 1010,515 1462,515" fill="none" stroke="#2B8A3E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1328,310 1350,310 1350,390 1780,390 1780,340 1792,340" fill="none" stroke="#1C7ED6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1790,70 1790,230 1792,230" fill="none" stroke="#F08C00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1728,490 1792,490" fill="none" stroke="#2B8A3E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1728,540 1792,540" fill="none" stroke="#2B8A3E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1792,600 1772,600 1772,720 1792,720" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1792,640 1772,640" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="1772" cy="640" r="4.5" fill="#212529"/>
+<polyline points="1792,680 1772,680" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="1772" cy="680" r="4.5" fill="#212529"/>
+<circle cx="1772" cy="600" r="4.5" fill="#212529"/>
+<polyline points="1772,720 1750,720" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1750,720 1750,734" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1736,734 1764,734" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1741,739 1759,739" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1746,744 1754,744" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="2380" y="270" width="170" height="130" rx="8" fill="#E6F6F4" stroke="#2A9D8F" stroke-width="2"/>
+<text x="2465.0" y="298" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">DHT22 #2</text>
+<text x="2465.0" y="316" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">at the pump</text>
+<text x="2465.0" y="330" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">(module, pull-up on board)</text>
+<text x="2410" y="285" font-size="11" text-anchor="middle" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">VDD</text>
+<polyline points="2410,270 2410,252" fill="none" stroke="#F08C00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2386" y="344" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">DATA</text>
+<polyline points="2380,340 2362,340" fill="none" stroke="#1C7ED6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2544" y="379" font-size="11" text-anchor="end" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="2550,375 2568,375" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="2440" y="440" width="260" height="140" rx="8" fill="#FDF2E1" stroke="#E09B3D" stroke-width="2"/>
+<text x="2570.0" y="468" font-size="14" text-anchor="middle" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">Grundfos ALPHA1</text>
+<text x="2570.0" y="486" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">PWM signal cable - check</text>
+<text x="2570.0" y="500" font-size="11" text-anchor="middle" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">wire colours on its label</text>
+<text x="2446" y="494" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">PWM in</text>
+<polyline points="2440,490 2422,490" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="2446" y="544" font-size="11" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">signal GND / ref</text>
+<polyline points="2440,540 2422,540" fill="none" stroke="#2B8A3E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="2268,230 2410,230 2410,252" fill="none" stroke="#F08C00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="2268,340 2362,340" fill="none" stroke="#1C7ED6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="2268,490 2422,490" fill="none" stroke="#2B8A3E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="2268,540 2422,540" fill="none" stroke="#2B8A3E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="2268,600 2280,600 2280,640 2268,640" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="2280" cy="600" r="4.5" fill="#212529"/>
+<polyline points="2280,640 2280,660 2750,660 2750,375 2568,375" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="2280" cy="640" r="4.5" fill="#212529"/>
+<text x="2275" y="700" font-size="11" text-anchor="start" font-weight="normal" fill="#868E96" font-family="Helvetica, Arial, sans-serif" font-style="italic">7, 8 not connected - insulate</text>
+<polyline points="2570,615 2570,580" fill="none" stroke="#868E96" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 5"/>
+<text x="2570" y="632" font-size="11" text-anchor="middle" font-weight="normal" fill="#868E96" font-family="Helvetica, Arial, sans-serif" font-style="italic">230 V mains: separate, NOT via this board</text>
+<text x="30" y="30" font-size="20" text-anchor="start" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">heating-pump - schematic</text>
+<text x="1100" y="30" font-size="12" text-anchor="start" font-weight="bold" fill="#212529" font-family="Helvetica, Arial, sans-serif">Legend:</text>
+<polyline points="1170,26 1200,26" fill="none" stroke="#D62828" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1206" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">+12 V</text>
+<polyline points="1280,26 1310,26" fill="none" stroke="#F08C00" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1316" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">+5 V</text>
+<polyline points="1390,26 1420,26" fill="none" stroke="#7B4FC9" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1426" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">+3.3 V</text>
+<polyline points="1500,26 1530,26" fill="none" stroke="#212529" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1536" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">GND</text>
+<polyline points="1610,26 1640,26" fill="none" stroke="#2B8A3E" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1646" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">PWM</text>
+<polyline points="1720,26 1750,26" fill="none" stroke="#1C7ED6" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1756" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">DHT data</text>
+<polyline points="1860,14 1860,28" fill="none" stroke="#212529" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1846,28 1874,28" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1851,33 1869,33" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1856,38 1864,38" fill="none" stroke="#212529" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1882" y="30" font-size="12" text-anchor="start" font-weight="normal" fill="#212529" font-family="Helvetica, Arial, sans-serif">= common GND (all connected)</text>
+<text x="30" y="850" font-size="12" text-anchor="start" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">FR120N terminals: PWM/GND header, screw terminals VIN+ / VIN- / OUT- (OUT+ = VIN+). Match the silkscreen on the module.</text>
+<text x="30" y="872" font-size="12" text-anchor="start" font-weight="normal" fill="#495057" font-family="Helvetica, Arial, sans-serif">Dots = junctions. Wires that touch without a dot are not connected (there are none here).</text>
+</svg>

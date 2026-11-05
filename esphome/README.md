@@ -5,6 +5,7 @@
 | Device | What it does |
 |--------|--------------|
 | [_template](devices/_template/) | Example ESP32 + BME280 sensor, copy it for new devices |
+| [heating-pump](devices/heating-pump/) | Grundfos ALPHA1 PWM speed control + 2x DHT22 (rack, pump) - wiring only so far |
 
 Add a row here for every new device.
 
@@ -14,6 +15,7 @@ Each device lives in `esphome/devices/<name>/`:
 |------|---------|
 | `<name>.yaml` | ESPHome config (firmware source) |
 | `wiring.yaml` | [WireViz](https://github.com/wireviz/WireViz) wiring description -> `wiring.svg` via `make generate` |
+| `schematic.py` | alternative to `wiring.yaml` when WireViz gets too wide: hand-placed schematic (rails, ground symbols, boxes with pins), stdlib Python -> `schematic.svg` via `make generate`. Example: [heating-pump](devices/heating-pump/) |
 | `README.md` | purpose, location, BOM, pinout, notes, wiring diagram |
 | `photos/` | photos of the actual build (strip EXIF GPS!) |
 | `components/` | optional custom C++ components |
