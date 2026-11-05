@@ -42,6 +42,11 @@ jobs:
         run: |
           for dir in esphome/devices/*/; do
             dev=$(basename "$dir")
+            # Work in progress (wiring only, no config yet) - nothing to validate.
+            if [ ! -f "$dir$dev.yaml" ]; then
+              echo "::notice::$dev: no $dev.yaml yet, skipping"
+              continue
+            fi
             echo "::group::$dev"
             docker run --rm -v "$PWD/esphome":/config ghcr.io/esphome/esphome:stable \
               config "devices/$dev/$dev.yaml" > /dev/null
