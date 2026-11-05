@@ -13,7 +13,7 @@ Each device lives in `esphome/devices/<name>/`:
 | File | Content |
 |------|---------|
 | `<name>.yaml` | ESPHome config (firmware source) |
-| `wiring.yaml` | [WireViz](https://github.com/wireviz/WireViz) wiring description -> `wiring.svg/png` via `make generate` |
+| `wiring.yaml` | [WireViz](https://github.com/wireviz/WireViz) wiring description -> `wiring.svg` via `make generate` |
 | `README.md` | purpose, location, BOM, pinout, notes, wiring diagram |
 | `photos/` | photos of the actual build (strip EXIF GPS!) |
 | `components/` | optional custom C++ components |

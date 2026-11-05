@@ -1,4 +1,4 @@
-# WireViz wiring description -> `make diagrams` renders wiring.svg / wiring.png
+# WireViz wiring description -> `make generate` renders wiring.svg
 # Docs: https://github.com/wireviz/WireViz/blob/master/docs/syntax.md
 connectors:
   ESP32:

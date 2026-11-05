@@ -15,9 +15,9 @@ DOT_SRC     := $(wildcard network/diagrams/*.dot)
 WIRING_SRC  := $(wildcard esphome/devices/*/wiring.yaml)
 
 GENERATED := $(INVENTORY_MD) \
-            $(NET_DIAGRAM).svg $(NET_DIAGRAM).png \
-            $(DOT_SRC:.dot=.svg) $(DOT_SRC:.dot=.png) \
-            $(WIRING_SRC:.yaml=.svg) $(WIRING_SRC:.yaml=.png)
+            $(NET_DIAGRAM).svg \
+            $(DOT_SRC:.dot=.svg) \
+            $(WIRING_SRC:.yaml=.svg)
 
 # ---- ESPHome (runs in Docker, no local install needed) ----------------------
 ESPHOME_IMAGE ?= ghcr.io/esphome/esphome:stable
@@ -62,17 +62,14 @@ $(INVENTORY_MD): $(INVENTORY) scripts/inventory.py | $(STAMP)
 build/network.dot: $(INVENTORY) scripts/inventory.py | $(STAMP)
 	$(PY) scripts/inventory.py dot $< -o $@
 
-$(NET_DIAGRAM).%: build/network.dot
-	dot -T$* $< -o $@
+$(NET_DIAGRAM).svg: build/network.dot
+	dot -Tsvg $< -o $@
 
 network/diagrams/%.svg: network/diagrams/%.dot
 	dot -Tsvg $< -o $@
 
-network/diagrams/%.png: network/diagrams/%.dot
-	dot -Tpng -Gdpi=150 $< -o $@
-
-esphome/devices/%/wiring.svg esphome/devices/%/wiring.png: esphome/devices/%/wiring.yaml | $(STAMP)
-	$(BIN)/wireviz -f sp -o $(@D) -O wiring $<
+esphome/devices/%/wiring.svg: esphome/devices/%/wiring.yaml | $(STAMP)
+	$(BIN)/wireviz -f s -o $(@D) -O wiring $<
 
 # ---- Lint ---------------------------------------------------------------------
 .PHONY: lint
