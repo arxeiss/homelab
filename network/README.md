@@ -43,7 +43,9 @@ flowchart LR
   iot -. "blocked (only replies to established)" .-> default
   default -->|allow| wan((Internet))
   iot -->|allow| wan
-  iot -. "admin ports blocked" .-> router["router"]
+  default -->|"allow all (incl. admin)"| router["router"]
+  iot -->|"DNS, DHCP, mDNS, ..."| router
+  iot -. "admin ports blocked" .-> router
   wan -. "drop unless dst-NAT" .-> default
 ```
 
@@ -58,6 +60,12 @@ flowchart LR
 | 5 | from IoT subnet to TCP 22, 80, 443, 8291 (SSH, web, Winbox) | drop |
 | 6 | mDNS (224.0.0.251:5353 UDP) from LAN list | accept |
 | 7 | anything not from LAN list (= WAN) | drop |
+| - | everything else (VLAN 1, rest of IoT) | accept (default) |
+
+> **Lockout warning:** no input rule explicitly accepts LAN traffic. VLAN 1 (and IoT DNS/DHCP/NTP)
+> reaches the router only because RouterOS accepts anything that falls off the end of the chain.
+> If you ever add a final "drop all" input rule, first add an explicit accept for `bridge`
+> (and the IoT services) above it, or you will lock yourself out of the router.
 
 **Forward (traffic through the router):**
 
