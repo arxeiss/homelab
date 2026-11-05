@@ -44,7 +44,7 @@ IPs: [inventory.md](../../network/inventory.md#proxmox-guests).
 | VMID | Name | Type | vCPU | RAM | Disk | Storage | On boot |
 |------|------|------|------|-----|------|---------|---------|
 | 100 | unifi-os-server | LXC (Debian) | 2 | 4 GB | 20 GB | `disk2` | yes |
-| 101 | gitlab-runner | LXC (Debian, privileged, Docker) | 2 | 2 GB | 40 GB | `disk2` | **no** |
+| 101 | gitlab-runner | LXC (Debian, privileged, Docker) | 2 | 2 GB | 40 GB | `disk2` | yes |
 | 102 | homeassistant | VM (HAOS, q35, OVMF) | 2 | 4 GB | 50 GB | `local-lvm` | yes (stopped, not deployed yet) |
 
 All three were created with [community-scripts](https://community-scripts.org) helper scripts.
